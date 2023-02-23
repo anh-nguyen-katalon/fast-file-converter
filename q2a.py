@@ -9,10 +9,10 @@ def main():
             while True:
                 marker = f.readline() # read marker (1st line)
                 if marker:
-                    output_file.write(f'>{marker.split()[0]}\n')
-                output_file.write(f'{f.readline()}') # read sequence (2nd line)
-                f.readline()
-                f.readline()
+                    output_file.write(marker.replace('@', '>'))
+                    output_file.write(f.readline()) # read sequence (2nd line)
+                    f.readline()
+                    f.readline()
     except Exception as e:
         print (e)
     finally:
