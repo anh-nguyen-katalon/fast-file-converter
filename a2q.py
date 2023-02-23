@@ -1,3 +1,5 @@
+import random
+import string
 def main():
     input_file_name = input("FASTA file (without file extension): ") #example input: SRR10003462_1
 
@@ -9,12 +11,14 @@ def main():
             while True:
                 marker = f.readline() # read marker (1st line)
                 if marker:
-                    marker = marker.removeprefix(">")
-                    output_file.write(marker)
-                output_file.write(f'{f.readline()}') # read sequence (2nd line)
-                output_file.write('+\n')
-                output_file.write('\n')
-        
+                    output_file.write(marker.replace(">", "@"))
+                    sequence = f.readline()
+                    output_file.write(sequence) # read sequence (2nd line)
+                    output_file.write('+\n')
+                    for i in range(len(sequence)):
+                        output_file.write(random.choice(string.ascii_letters))
+                    output_file.write('\n')
+                
     except Exception as e:
         print (e)
     finally:
