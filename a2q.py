@@ -8,17 +8,15 @@ def main():
 
     try:
         with open (f'{input_file_name}.fasta', 'r') as f:
-            while True:
-                marker = f.readline() # read marker (1st line)
-                if marker:
-                    output_file.write(marker.replace(">", "@"))
-                    sequence = f.readline()
-                    output_file.write(sequence) # read sequence (2nd line)
+            for line_index, line in enumerate(f):
+                if line_index % 2 == 0:
+                    output_file.write(line.replace(">", "@"))
+                else:
+                    output_file.write(line)
                     output_file.write('+\n')
-                    for i in range(len(sequence)):
+                    for i in range(len(line)):
                         output_file.write(random.choice(string.ascii_letters))
                     output_file.write('\n')
-                
     except Exception as e:
         print (e)
     finally:

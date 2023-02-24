@@ -3,16 +3,14 @@ def main():
 
     output_file_name = f'{input_file_name}.fasta'
     output_file = open(output_file_name, 'w+')
-
+    
     try:
         with open (f'{input_file_name}.fastq', 'r') as f:
-            while True:
-                marker = f.readline() # read marker (1st line)
-                if marker:
-                    output_file.write(marker.replace('@', '>'))
-                    output_file.write(f.readline()) # read sequence (2nd line)
-                    f.readline()
-                    f.readline()
+            for line_index, line in enumerate(f):
+                if line_index % 4 == 0:
+                    output_file.write(line.replace('@', '>'))
+                elif line_index % 4 == 1:
+                    output_file.write(line)    
     except Exception as e:
         print (e)
     finally:
